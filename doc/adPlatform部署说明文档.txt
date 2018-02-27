@@ -1,0 +1,41 @@
+adPlatform部署说明文档
+项目目前包含两个war包
+1. ADPush.war
+包括
+router后台(92.13) 其中router前端资源同步到router_resource
+router_resource业务(92.8&92.11)
+app后台(92.13) 其中app资源同步到app_resource
+app_resources业务(92.9&92.10)
+
+2. ADPushNBI.war
+router-推送(Timer Task & 手动)
+router-城市信息维护(Timer Task & 手动)
+router-redis信息维护(Timer Task & 手动)
+
+mysql(92.250):
+database1:phicomm_ad(任务,素材,统计,所有用户)
+database2:ad_task(quartz,路由器黑名单,推送记录)
+database3:phicomm_ad_app(任务,素材,统计)
+
+redis(92.6 & 92.12):
+router-task (任务参数,设备列表)
+app-task (任务参数)
+
+升级顺序:mysql > redis > ADPushNBI.war > *_resource > *后台 
+
+其它:
+1. 现router素材目录routerad(原router素材目录为pushupdate,material),现app素材目录appad
+2. 92.7为92.13的冷备
+
+
+
+生产环境地址:https://ad.phicomm.com/ADPush
+
+路由器任务重推步骤:
+1. 若是投放状态下,需update push_update set exeStatus=2 where id..,切换成执行中状态
+2. 进入后台暂停并修改任务,重新启动.
+3. 修补数据.
+check phicomm_ad.push_update startTime and exeStatus and exeCloseStatus 
+if 投放成功数==0
+sed catalina.out|时间段|grep '\[错误码100\]'|wc -l
+update ad_task.router_push_summary set pushSuccessNum = 
