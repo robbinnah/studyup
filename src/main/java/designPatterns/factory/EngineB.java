@@ -5,10 +5,10 @@ import designPatterns.factory.Engine;
 /**
  * Created by mortal on 2018/3/7.
  */
-public class EngineA extends Engine {
+public class EngineB extends Engine {
 
-    public EngineA(){
-        System.out.println("engine A");
+    public EngineB(){
+        System.out.println("engine B");
     }
 
     public static void main(String args[]) {

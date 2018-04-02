@@ -6,7 +6,7 @@
 > 2. 
 ---
 ### `线上异常--死锁`
-> 1. `show engine innodb status;` 查找到最近一次死锁发生的详情--查到影响死锁发生的三条语句
+> 1. `show engine innodb status\G;` 查找到最近一次死锁发生的详情--查到影响死锁发生的三条语句
 > 2. `show variables like '%general%'` 查看general_log
 ##### sql1
 ```
@@ -55,9 +55,31 @@ BEGIN
 END ||
 DELIMITER ;
 ```
+#### 另外， innodb虽然是行级锁，但锁是建立在索引上的。如sql未使用索引，仍会全表扫描
+
 ---
 
-### `httpClient4.5的使用问题，一定要设置连接超时和读取超时时间，默认永不超时`
+### `线上问题` 
+
+> * 描述：高并发下通过长连接向千万台路由器下发消息，多线程运行一段时间后block
+> * 思路：1.  
+
+`httpClient4.5的使用问题，一定要设置连接超时和读取超时时间，默认永不超时`
 `
 httpGet.setConfig(RequestConfig.custom().setConnectTimeout(10000).setSocketTimeout(10000).build());
-`
+
+### `mysql data output`
+```
+mysql -uroot -pfeixun*123 -Ne "use router2; select c.mac from fx_device d INNER JOIN fx_device_city c on d.deviceMac=c.mac where d.deviceTyp='K2' and d.deviceVer='22.6.510.57' and c. province in ('广西壮族自治区' ,'海南省')" > /tmp/1.txt
+```
+### `查看主从同步情况`
+```
+show slave status\G;
+Seconds_Behind_Master: 85741
+
+```
+
+### `千万级表数据的转移`
+```
+见moveData2 move_ad_stats
+```

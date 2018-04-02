@@ -1,4 +1,4 @@
-package designPatterns.factory.adstractFactory;
+package designPatterns.factory.factory;
 
 import designPatterns.factory.BMW;
 import designPatterns.factory.BMW320;
@@ -6,7 +6,7 @@ import designPatterns.factory.BMW320;
 /**
  * Created by mortal on 2018/3/7.
  */
-public class BMW320Factory implements BMWFactory {
+public class BMW320Factory implements designPatterns.factory.factory.BMWFactory {
 
     public static void main(String args[]) {
 
