@@ -61,3 +61,26 @@ DELIMITER ;
 `
 httpGet.setConfig(RequestConfig.custom().setConnectTimeout(10000).setSocketTimeout(10000).build());
 `
+---
+
+### 如何判断一个资源已经加载完成
+* IE的script 元素只支持onreadystatechange事件，不支持onload事件。
+* FF的script 元素不支持onreadystatechange事件，只支持onload事件。
+* 如果要一个<script\> 加载完成执行一个操作，FF使用onload事件就行了，IE下则要结合onreadystatechange事件和this.readyState，
+this.readyState的值为'loaded'或者'complete'都可以表示这个script已经加载完成．
+如何结合IE和FF的区别?参考一下jquery的源码：
+```
+var script = document.createElement('script');
+script.src="xx.js";
+script.onload = script.onreadystatechange = function(){
+     if(  ! this.readyState     //这是FF的判断语句，因为ff下没有readyState这人值，IE的readyState肯定有值
+          || this.readyState=='loaded' || this.readyState=='complete'   // 这是IE的判断语句
+    ){
+          alert('loaded');
+    }
+};
+```
+
+### DDOS 攻击防范
+
+### 前端

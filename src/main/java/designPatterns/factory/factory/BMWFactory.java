@@ -1,4 +1,4 @@
-package designPatterns.factory.adstractFactory;
+package designPatterns.factory.factory;
 
 import designPatterns.factory.BMW;
 
