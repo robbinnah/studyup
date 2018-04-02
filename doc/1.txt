@@ -1,3 +1,54 @@
+TCP 基于流,面向连接的协议
+粘包 nagle算法
+拆包 MSS 最大报文长度 = MTU-固定IP首部-TCP首部长度。报文>MSS，拆开发送
+解决办法 a. 消息定长 b. 包尾分割符 c. 消息分为消息头和消息体，头部加入int变量记录消息总长度
+丢包 一般是客户端接收到后处理的有问题
+
+滑动窗口 描述接收方的TCP数据缓冲区的大小
+拥塞窗口 以2的指数递增的发送数据包，直到超时错误。确定了拥塞窗口的大小
+
+
+
+
+==========================================
+java
+public int hashCode() {
+            int result = (int) (itemId ^ (itemId >>> 32));
+            result = 31 * result + (int) (userId ^ (userId >>> 32));
+            return result;
+        }
+====
+存储结构
+
+====
+nio
+
+====
+多线程
+
+锁
+ReentrantLock 公平锁和非公平锁(无视等待队列) 实现lock和serializable 成员变量 final sync  可中断 可定时
+sleep(long millis): 在指定的毫秒数内让当前正在执行的线程休眠（暂停执行）。允许更低优先级的线程执行
+Thread.yield()方法作用是：暂停当前正在执行的线程对象，并执行其他线程。“退让”，它把运行机会让给了同等优先级的其他线程
+t.join():指主线程等待t线程终止。 
+Obj.wait(),Obj.notify必须在synchronized(Obj){...}语句块内，
+wait就是说线程在获取对象锁后，主动释放对象锁，同时本线程休眠。直到有其它线程调用对象的notify()唤醒该线程，才能继续获取对象锁，并继续执行。相应的notify()就是对对象锁的唤醒操作。但有一点需要注意的是notify()调用后，并不是马上就释放对象锁的，而是在相应的synchronized(){}语句块执行结束，自动释放锁后，JVM会在wait()对象锁的线程中随机选取一线程，赋予其对象锁，唤醒线程，继续执行。这样就提供了在线程间同步、唤醒的操作。Thread.sleep()与Object.wait()二者都可以暂停当前线程，释放CPU控制权，主要的区别在于Object.wait()在释放CPU同时，释放了对象锁的控制。
+
+AQS(AbstractQueuedSynchronizer) 
+AQS，它维护了一个volatile int state（代表共享资源）和一个FIFO线程等待队列（多线程争用资源被阻塞时会进入此队列）
+
+====
+jvm
+
+====
+高并发内存队列 disruptor 数组
+不用锁 Ring Buffer(作用为生产和消费) （读写指针） ready Buffer (数据写入成功)  
+缓存行填充 避免GC 批操作
+====
+redis
+
+scard key 
+
 mysql 性能调优
 show engine innodb status;
 
@@ -5,6 +56,7 @@ show engine innodb status;
 
 
 =====
+0-1背包
 for(i=1;i<row;i++)
     {
         for(j=1;j<col;j++)
@@ -22,3 +74,4 @@ for(i=1;i<row;i++)
      2：装入2个物品，确定在各种不同载重量的背包下，能够得到的最大价值
      。。。
      n：以此类推，装入n个物品，确定在各种不同载重量的背包下，能够得到的最大价值
+
