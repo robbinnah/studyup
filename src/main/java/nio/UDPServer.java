@@ -73,7 +73,7 @@ public class UDPServer {
         System.out.println("receive content : " + content);
     }
 
-    public static void main(String args[]){
+    public static void main(String args[]) {
         UDPServer udpServer = new UDPServer();
         try {
             udpServer.init();
