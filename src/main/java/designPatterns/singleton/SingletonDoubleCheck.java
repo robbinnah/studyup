@@ -7,7 +7,7 @@ package designPatterns.singleton;
  * 描述：延迟加载，线程安全，但singleton = new SingletonDoubleCheck()仍可能抛出空指针异常，因为jvm分配对象内存和引用赋值是两步操作，非原子操作
  */
 public class SingletonDoubleCheck {
-    private static SingletonDoubleCheck singleton;
+    private static volatile SingletonDoubleCheck singleton;
 
     // 禁止被实例化
     private SingletonDoubleCheck() {

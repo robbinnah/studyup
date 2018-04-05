@@ -61,7 +61,7 @@ Clazz c = new Clazz 步骤: 是否加载检查，对象分配内存，并发处�
 对象头: 
 mark word(锁的标记位，哈希码（HashCode）、GC分代年龄、锁状态标志、线程持有的锁、偏向线程ID、偏向时间戳) + class pointer(对象对应的class对象/元数据对象的内存地址)
 length:
-仅数据拥有该属性
+仅数组拥有该属性
 对象中的实际数据:
 包括了对象的所有成员变量
 对齐填充:
@@ -105,6 +105,18 @@ b. 空间问题：产生大量不连续的内存碎片
 
 ====
 【java nio】
+1. channel 和IO中的Stream(流)是差不多一个等级的。只不过Stream是单向的,Channel是双向的，可以用来读写
+2. buffer
+3. selector  运行单线程处理多个Channel ,事件的例子有如新的连接进来、数据接收
+
+* clear()  position=0, limit = capacity
+* compact() position=最后一个未读数据后面, limity= capacity
+
+a. 分配空间（ByteBuffer buf = ByteBuffer.allocate(1024); 还有一种allocateDirector后面再陈述）
+b. 写入数据到Buffer(int bytesRead = fileChannel.read(buf);)
+c. 调用filp()方法（ buf.flip();）
+d. 从Buffer中读取数据（System.out.print((char)buf.get());）
+e. 调用clear()方法或者compact()方法
 
 【netty】
 
